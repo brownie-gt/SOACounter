@@ -1,4 +1,4 @@
-package edu.soa.counter;
+package com.example.soacounter;
 
 import android.content.Context;
 import android.widget.Toast;

@@ -1,4 +1,4 @@
-package edu.soa.counter;
+package com.example.soacounter;
 
 public class Count {
 	private int id;
