@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 
 public class Message {
-	//Muestra Mensaje Pop-Up
+	//Muestra Mensaje Pop-Up - 2
 	public static void message(Context context, String text) {
 		Toast.makeText(context, text, Toast.LENGTH_LONG).show();
 	}
