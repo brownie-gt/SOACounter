@@ -2,21 +2,24 @@ package com.example.soacounter;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/** Adaptador para conectarse a la DB */
 public class CounterDatabaseAdapter {
 
 	CounterHelper helper;
+	SQLiteDatabase db = helper.getWritableDatabase();
 
 	public CounterDatabaseAdapter(Context context) {
 		helper = new CounterHelper(context);
 	}
 
+	/** Inserta conteo nuevo */
 	public long insertCount(Count count) {
-		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues content = new ContentValues();
 		content.put(CounterHelper.PLACE, count.getPlace());
 		content.put(CounterHelper.CAR, count.getCar());
@@ -25,6 +28,28 @@ public class CounterDatabaseAdapter {
 		return db.insert(CounterHelper.COUNTER_TABLE, null, content);
 	}
 
+	/** Obtener conteos */
+	public Cursor getCounts() {
+		// Define a projection that specifies which columns from the database
+		// you will actually use after this query.
+		String[] projection = { CounterHelper.PLACE, CounterHelper.CAR,
+				CounterHelper.BUS, CounterHelper.TRUCK, };
+
+		// How you want the results sorted in the resulting Cursor
+		String sortOrder = CounterHelper.PLACE + " DESC";
+
+		Cursor c = db.query(CounterHelper.COUNTER_TABLE, // The table to query
+				projection, // The columns to return
+				null, // The columns for the WHERE clause
+				null, // The values for the WHERE clause
+				null, // don't group the rows
+				null, // don't filter by row groups
+				sortOrder // The sort order
+				);
+		return c;
+	}
+
+	// INNER-CLASS para crear y modifacar estructura de BD
 	static class CounterHelper extends SQLiteOpenHelper {
 
 		private static final String DATABASE_NAME = "COUNTER_DB";
