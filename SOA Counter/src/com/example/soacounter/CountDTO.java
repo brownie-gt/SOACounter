@@ -1,6 +1,6 @@
 package com.example.soacounter;
 
-public class Count {
+public class CountDTO {
 	private int id;
 	private String place;
 	private int car;

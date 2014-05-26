@@ -19,7 +19,7 @@ public class CounterDatabaseAdapter {
 	}
 
 	/** Inserta conteo nuevo */
-	public long insertCount(Count count) {
+	public long insertCount(CountDTO count) {
 		ContentValues content = new ContentValues();
 		content.put(CounterHelper.PLACE, count.getPlace());
 		content.put(CounterHelper.CAR, count.getCar());

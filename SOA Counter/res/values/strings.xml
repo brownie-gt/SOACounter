@@ -3,5 +3,9 @@
 
     <string name="app_name">Traffic Counter</string>
     <string name="title_activity_report">ReportActivity</string>
+    <string name="input_place">Enter an address</string>
+    <string name="button_reset">Reset</string>
+    <string name="button_save">Save</string>
+    <string name="button_graph">Graph</string>
 
 </resources>
