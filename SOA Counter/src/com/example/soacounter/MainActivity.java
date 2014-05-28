@@ -63,12 +63,21 @@ public class MainActivity extends Activity {
 					.show();
 			return;
 		}
+
+		String car = carView.getText().toString();
+		String bus = busView.getText().toString();
+		String truck = truckView.getText().toString();
 		Log.d("soa", "address: " + address);
-		Log.d("soa", carView.getText().toString());
-		Log.d("soa", busView.getText().toString());
-		Log.d("soa", truckView.getText().toString());
+		Log.d("soa", "car: " + car);
+		Log.d("soa", "bus: " + bus);
+		Log.d("soa", "truck: " + truck);
 
 		CountDTO count = new CountDTO();
+		count.setPlace(address);
+		count.setCar(Integer.parseInt(car));
+		count.setBus(Integer.parseInt(bus));
+		count.setTruck(Integer.parseInt(truck));
+
 		CounterDatabaseAdapter db = new CounterDatabaseAdapter(this);
 		long inserted = db.insertCount(count);
 		Log.d("soa", "Inserted: " + String.valueOf(inserted));
@@ -81,10 +90,10 @@ public class MainActivity extends Activity {
 					.show();
 		}
 	}
-	
-	public void graph(View view){
+
+	public void graph(View view) {
 		Intent myIntent = new Intent(this, ReportActivity.class);
-//		myIntent.putExtra("key", value); //Optional parameters
+		// myIntent.putExtra("key", value); //Optional parameters
 		this.startActivity(myIntent);
 	}
 }
