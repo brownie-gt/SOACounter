@@ -12,10 +12,11 @@ import android.util.Log;
 public class CounterDatabaseAdapter {
 
 	CounterHelper helper;
-	SQLiteDatabase db = helper.getWritableDatabase();
+	SQLiteDatabase db;
 
 	public CounterDatabaseAdapter(Context context) {
 		helper = new CounterHelper(context);
+		db = helper.getWritableDatabase();
 	}
 
 	/** Inserta conteo nuevo */
@@ -32,7 +33,7 @@ public class CounterDatabaseAdapter {
 	public Cursor getCounts() {
 		// Define a projection that specifies which columns from the database
 		// you will actually use after this query.
-		String[] projection = { CounterHelper.PLACE, CounterHelper.CAR,
+		String[] projection = { CounterHelper.UID, CounterHelper.PLACE, CounterHelper.CAR,
 				CounterHelper.BUS, CounterHelper.TRUCK, };
 
 		// How you want the results sorted in the resulting Cursor
@@ -74,20 +75,17 @@ public class CounterDatabaseAdapter {
 		private static final String DROP_COUNTER_TABLE = "DROP TABLE IF EXISTS "
 				+ COUNTER_TABLE;
 
-		private Context context;
 
 		public CounterHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
-			this.context = context;
-			Message.message(context, "CounterHelper constructor");
+			Log.d("soa", "CounterHelper constructor");
 		}
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			try {
-				Message.message(context, "onCreate called");
+				Log.d("soa", "CounterHelper conCreate called:");
 				db.execSQL(CREATE_COUNTER_TABLE);
-				Log.d("SOA", CREATE_COUNTER_TABLE + " CREATED");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -96,7 +94,7 @@ public class CounterDatabaseAdapter {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			try {
-				Message.message(context, "onUpgrade called");
+				Log.d("soa", "onUpgrade called:");
 				db.execSQL(DROP_COUNTER_TABLE);
 				onCreate(db);
 			} catch (SQLException e) {

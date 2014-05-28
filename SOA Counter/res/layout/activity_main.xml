@@ -110,6 +110,7 @@
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:layout_alignLeft="@+id/imageButton3"
+        android:onClick="graph"
         android:text="@string/button_graph" />
 
 </RelativeLayout>
