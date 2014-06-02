@@ -6,6 +6,8 @@ public class CountDTO {
 	private int car;
 	private int bus;
 	private int truck;
+	private double longitude;
+	private double latitude;
 
 	public int getId() {
 		return id;
@@ -45,6 +47,22 @@ public class CountDTO {
 
 	public void setTruck(int truck) {
 		this.truck = truck;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
 	}
 
 }

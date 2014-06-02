@@ -88,6 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/imageButton1"
+        android:layout_alignRight="@+id/imageButton1"
         android:layout_below="@+id/editText1"
         android:layout_marginTop="96dp"
         android:onClick="reset"
@@ -100,6 +101,7 @@
         android:layout_alignBaseline="@+id/button1"
         android:layout_alignBottom="@+id/button1"
         android:layout_alignLeft="@+id/imageButton2"
+        android:layout_alignRight="@+id/imageButton2"
         android:onClick="save"
         android:text="@string/button_save" />
 
@@ -110,6 +112,7 @@
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:layout_alignLeft="@+id/imageButton3"
+        android:layout_alignRight="@+id/imageButton3"
         android:onClick="graph"
         android:text="@string/button_graph" />
 

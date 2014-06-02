@@ -26,6 +26,8 @@ public class CounterDatabaseAdapter {
 		content.put(CounterHelper.CAR, count.getCar());
 		content.put(CounterHelper.BUS, count.getBus());
 		content.put(CounterHelper.TRUCK, count.getTruck());
+		content.put(CounterHelper.LONGITUDE, count.getLongitude());
+		content.put(CounterHelper.LATITUDE, count.getLatitude());
 		return db.insert(CounterHelper.COUNTER_TABLE, null, content);
 	}
 
@@ -33,11 +35,12 @@ public class CounterDatabaseAdapter {
 	public Cursor getCounts() {
 		// Define a projection that specifies which columns from the database
 		// you will actually use after this query.
-		String[] projection = { CounterHelper.UID, CounterHelper.PLACE, CounterHelper.CAR,
-				CounterHelper.BUS, CounterHelper.TRUCK, };
+		String[] projection = { CounterHelper.UID, CounterHelper.PLACE,
+				CounterHelper.CAR, CounterHelper.BUS, CounterHelper.TRUCK,
+				CounterHelper.LONGITUDE, CounterHelper.LATITUDE };
 
 		// How you want the results sorted in the resulting Cursor
-		String sortOrder = CounterHelper.PLACE + " DESC";
+		String sortOrder = CounterHelper.PLACE + " ASC";
 
 		Cursor c = db.query(CounterHelper.COUNTER_TABLE, // The table to query
 				projection, // The columns to return
@@ -54,27 +57,26 @@ public class CounterDatabaseAdapter {
 	static class CounterHelper extends SQLiteOpenHelper {
 
 		private static final String DATABASE_NAME = "COUNTER_DB";
-		private static final int DATABASE_VERSION = 1;
+		private static final int DATABASE_VERSION = 3;
 		private static final String COUNTER_TABLE = "COUNTER_TABLE";
-
 		// CAMPOS
-		private static final String UID = "_id";
-		private static final String PLACE = "PLACE";
-		private static final String CAR = "CAR";
-		private static final String BUS = "BUS";
-		private static final String TRUCK = "TRUCK";
-		private static final String LONG = "LONGITUD";
-		private static final String LATITUD = "LATITUD";
+		public static final String UID = "_id";
+		public static final String PLACE = "PLACE";
+		public static final String CAR = "CAR";
+		public static final String BUS = "BUS";
+		public static final String TRUCK = "TRUCK";
+		public static final String LONGITUDE = "LONGITUDE";
+		public static final String LATITUDE = "LATITUDE";
 
 		private static final String CREATE_COUNTER_TABLE = "CREATE TABLE "
 				+ COUNTER_TABLE + " (" + UID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + PLACE
 				+ " VARCHAR(255)," + CAR + " INTEGER," + BUS + " INTEGER,"
-				+ TRUCK + " INTEGER);";
+				+ TRUCK + " INTEGER, " + LONGITUDE + " DOUBLE, " + LATITUDE
+				+ " DOUBLE);";
 
 		private static final String DROP_COUNTER_TABLE = "DROP TABLE IF EXISTS "
 				+ COUNTER_TABLE;
-
 
 		public CounterHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -84,7 +86,7 @@ public class CounterDatabaseAdapter {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			try {
-				Log.d("soa", "CounterHelper conCreate called:");
+				Log.d("soa", "CounterHelper conCreate called");
 				db.execSQL(CREATE_COUNTER_TABLE);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -94,7 +96,7 @@ public class CounterDatabaseAdapter {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			try {
-				Log.d("soa", "onUpgrade called:");
+				Log.d("soa", "CounterHelper onUpgrade called");
 				db.execSQL(DROP_COUNTER_TABLE);
 				onCreate(db);
 			} catch (SQLException e) {
