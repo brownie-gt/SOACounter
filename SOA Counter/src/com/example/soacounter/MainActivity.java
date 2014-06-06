@@ -1,5 +1,9 @@
 package com.example.soacounter;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.chart.BarChart.Type;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -83,11 +87,6 @@ public class MainActivity extends Activity {
 					.show();
 			return;
 		}
-		// if (!gps) {
-		// Toast.makeText(this, "Please enable GPS", Toast.LENGTH_LONG).show();
-		// return;
-		// }
-		// updateLastKnownLocation();
 		String car = carView.getText().toString();
 		String bus = busView.getText().toString();
 		String truck = truckView.getText().toString();
@@ -119,23 +118,23 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	
 	public void graph(View view) {
-		Intent myIntent = new Intent(this, ReportActivity.class);
-		// myIntent.putExtra("key", value); //Optional parameters
-		this.startActivity(myIntent);
+		Chart chart = new Chart(this);
+		XYMultipleSeriesRenderer renderer = chart.getBarRenderer();
+		chart.chartSettings(renderer);
+		Intent intent = ChartFactory.getBarChartIntent(this,
+				chart.getBarDataset(), renderer, Type.DEFAULT);
+		startActivity(intent);
 	}
-
 
 	// GPS Listener
 	private final LocationListener locationListener = new LocationListener() {
 		public void onLocationChanged(Location location) {
-//			Log.d("soa", "Location Changed");
 			if (location != null) {
 				latitude = location.getLatitude();
 				longitude = location.getLongitude();
 				gps = true;
-//				Log.d("soa", "longitude: " + longitude);
-//				Log.d("soa", "latitude: " + latitude);
 			} else {
 				latitude = 0.0;
 				longitude = 0.0;

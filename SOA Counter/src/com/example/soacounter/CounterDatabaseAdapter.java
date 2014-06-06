@@ -28,6 +28,8 @@ public class CounterDatabaseAdapter {
 		content.put(CounterHelper.TRUCK, count.getTruck());
 		content.put(CounterHelper.LONGITUDE, count.getLongitude());
 		content.put(CounterHelper.LATITUDE, count.getLatitude());
+		double average = (count.getCar() + count.getBus() + count.getTruck()) / 3;
+		content.put(CounterHelper.AVG, average);
 		return db.insert(CounterHelper.COUNTER_TABLE, null, content);
 	}
 
@@ -40,7 +42,7 @@ public class CounterDatabaseAdapter {
 				CounterHelper.LONGITUDE, CounterHelper.LATITUDE };
 
 		// How you want the results sorted in the resulting Cursor
-		String sortOrder = CounterHelper.PLACE + " ASC";
+		String sortOrder = CounterHelper.AVG + " DESC";
 
 		Cursor c = db.query(CounterHelper.COUNTER_TABLE, // The table to query
 				projection, // The columns to return
@@ -57,7 +59,7 @@ public class CounterDatabaseAdapter {
 	static class CounterHelper extends SQLiteOpenHelper {
 
 		private static final String DATABASE_NAME = "COUNTER_DB";
-		private static final int DATABASE_VERSION = 3;
+		private static final int DATABASE_VERSION = 4;
 		private static final String COUNTER_TABLE = "COUNTER_TABLE";
 		// CAMPOS
 		public static final String UID = "_id";
@@ -67,13 +69,14 @@ public class CounterDatabaseAdapter {
 		public static final String TRUCK = "TRUCK";
 		public static final String LONGITUDE = "LONGITUDE";
 		public static final String LATITUDE = "LATITUDE";
+		public static final String AVG = "AVG";
 
 		private static final String CREATE_COUNTER_TABLE = "CREATE TABLE "
 				+ COUNTER_TABLE + " (" + UID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + PLACE
 				+ " VARCHAR(255)," + CAR + " INTEGER," + BUS + " INTEGER,"
 				+ TRUCK + " INTEGER, " + LONGITUDE + " DOUBLE, " + LATITUDE
-				+ " DOUBLE);";
+				+ " DOUBLE, " + AVG + " DOUBLE);";
 
 		private static final String DROP_COUNTER_TABLE = "DROP TABLE IF EXISTS "
 				+ COUNTER_TABLE;
